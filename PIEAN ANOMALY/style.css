@@ -1,0 +1,342 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Sarabun', sans-serif;
+}
+
+body {
+    background-color: #050505;
+    color: #ffffff;
+    overflow: hidden;
+}
+
+.screen {
+    display: none;
+    width: 100vw;
+    height: 100vh;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle, #1a0202 0%, #000000 90%);
+}
+
+.screen.active {
+    display: flex;
+}
+
+/* หน้าแรก */
+.title-container {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.game-title {
+    font-family: 'Creepster', cursive;
+    font-size: 80px;
+    color: #ff0000;
+    text-shadow: 0 0 10px #ff0000, 0 0 25px #8b0000, 0 0 40px #4a0000;
+    letter-spacing: 4px;
+    animation: flicker 3s infinite alternate;
+}
+
+.sub-title {
+    color: #888;
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+.horror-btn {
+    background: #111;
+    color: #ff3333;
+    border: 2px solid #8b0000;
+    padding: 15px 40px;
+    font-size: 22px;
+    font-weight: bold;
+    cursor: pointer;
+    letter-spacing: 2px;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 15px rgba(139, 0, 0, 0.4);
+}
+
+.horror-btn:hover {
+    background: #8b0000;
+    color: #ffffff;
+    box-shadow: 0 0 25px #ff0000;
+    transform: scale(1.05);
+}
+
+/* หน้าเลือกด่าน */
+.section-title {
+    font-size: 36px;
+    color: #ff3333;
+    margin-bottom: 30px;
+    text-shadow: 0 0 10px #8b0000;
+}
+
+.level-container {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.level-card {
+    background: #111111;
+    border: 2px solid #444;
+    padding: 25px;
+    width: 280px;
+    border-radius: 8px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s;
+}
+
+.level-card:hover {
+    border-color: #ff0000;
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+    transform: translateY(-5px);
+}
+
+.level-card h3 {
+    color: #fff;
+    margin: 15px 0 10px 0;
+}
+
+.level-card p {
+    color: #888;
+    font-size: 14px;
+}
+
+.level-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #008800;
+    color: #fff;
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.level-card.locked {
+    opacity: 0.5;
+    cursor: not-allowed;
+    border-color: #222;
+}
+
+.level-card.locked:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+.locked-badge {
+    background: #555;
+}
+
+.back-btn {
+    font-size: 16px;
+    padding: 10px 25px;
+}
+
+/* หน้าตัวเกม (ขยายกว้าง 1280px) */
+.game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.game-top-bar {
+    width: 1280px; /* ขยายให้พอดีกับจอภาพหลัก */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2px;
+}
+
+.info-box {
+    background: #111;
+    color: #ffcc00;
+    border: 1px solid #ffcc00;
+    padding: 6px 15px;
+    font-family: monospace;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.mistake-box {
+    color: #ff4444;
+    border-color: #ff4444;
+}
+
+.sanity-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #111;
+    border: 1px solid #555;
+    padding: 6px 15px;
+    font-size: 15px;
+}
+
+.sanity-bar-bg {
+    width: 180px;
+    height: 14px;
+    background: #333;
+    border: 1px solid #777;
+    position: relative;
+    overflow: hidden;
+}
+
+.sanity-fill {
+    width: 100%;
+    height: 100%;
+    background: #00cc44;
+    transition: width 0.3s ease, background 0.3s ease;
+}
+
+.warning-banner {
+    width: 1280px;
+    background: rgba(255, 0, 0, 0.2);
+    border: 1px solid #ff0000;
+    color: #ff3333;
+    text-align: center;
+    padding: 8px;
+    font-weight: bold;
+    font-size: 16px;
+    animation: flicker 1s infinite;
+}
+
+/* ขยายหน้าจอ CCTV เป็น 1280x720px */
+.screen-box {
+    position: relative;
+    width: 1280px;
+    height: 720px;
+    border: 4px solid #ff0000;
+    box-shadow: 0 0 30px rgba(255, 0, 0, 0.5);
+    background: #000;
+}
+
+.screen-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.room-label {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #00ff00;
+    padding: 8px 16px;
+    font-family: monospace;
+    font-size: 18px;
+    border: 1px solid #00ff00;
+}
+
+.rec-indicator {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    color: #ff0000;
+    font-family: monospace;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 18px;
+}
+
+.dot {
+    width: 14px;
+    height: 14px;
+    background: #ff0000;
+    border-radius: 50%;
+    animation: blink 1s infinite;
+}
+
+.checking-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+.checking-text {
+    color: #ff3333;
+    font-size: 36px;
+    font-family: monospace;
+    font-weight: bold;
+    text-shadow: 0 0 15px #ff0000;
+    animation: flicker 1.5s infinite;
+}
+
+.control-panel {
+    text-align: center;
+}
+
+.control-panel h3 {
+    margin-bottom: 6px;
+    color: #ccc;
+    font-size: 14px;
+}
+
+.cam-buttons {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+}
+
+.cam-buttons button {
+    background: #1a1a1a;
+    color: #fff;
+    border: 1px solid #555;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: 0.2s;
+    font-size: 14px;
+}
+
+.cam-buttons button:hover {
+    background: #8b0000;
+    border-color: #ff0000;
+}
+
+.btn-report {
+    background: #ff0000;
+    color: #fff;
+    border: none;
+    padding: 12px 30px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 0 12px #ff0000;
+    transition: 0.2s;
+}
+
+.btn-report:hover {
+    background: #cc0000;
+    box-shadow: 0 0 25px #ff0000;
+}
+
+@keyframes flicker {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+    52% { opacity: 0.2; }
+    54% { opacity: 0.9; }
+    80% { opacity: 0.9; }
+    82% { opacity: 0.3; }
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}

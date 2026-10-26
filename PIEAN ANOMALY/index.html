@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PIEAN ANOMALY</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- 1. หน้าแรก (Main Menu Screen) -->
+    <div id="start-screen" class="screen active">
+        <div class="title-container">
+            <h1 class="game-title">PIEAN ANOMALY</h1>
+            <p class="sub-title">สังเกตสิ่งผิดปกติ... ก่อนที่มันจะสังเกตคุณ</p>
+        </div>
+        <button id="start-btn" class="horror-btn" onclick="goToLevelSelect()">เริ่มเกม (START)</button>
+    </div>
+
+   <!-- 2. หน้าเลือกด่าน (Level Select Screen) -->
+    <div id="level-screen" class="screen">
+        <h2 class="section-title">เลือกระดับสถานที่</h2>
+        <div class="level-container">
+            <div class="level-card" onclick="goToStoryScreen('school')">
+                <div class="level-badge">AVAILABLE</div>
+                <h3>โรงเรียน (SCHOOL)</h3>
+                <p>กล้องวงจรปิด 6 จุด: ทางเดิน, บันได, โรงอาหาร, ห้องคอม, ห้องน้ำ, ห้องประชุม</p>
+            </div>
+            <div class="level-card locked">
+                <div class="level-badge locked-badge">LOCKED</div>
+                <h3>โรงพยาบาลรกร้าง</h3>
+                <p>ปลดล็อกเร็วๆ นี้...</p>
+            </div>
+        </div>
+        <button class="horror-btn back-btn" onclick="goToMainMenu()">กลับหน้าหลัก</button>
+    </div>
+
+    <!-- 2.5 หน้าจอเนื้อเรื่องและข้อมูลสถานที่ (Story Screen) -->
+    <div id="story-screen" class="screen">
+        <div class="story-container" style="max-width: 800px; text-align: center; padding: 30px; background: #0f0202; border: 2px solid #8b0000; box-shadow: 0 0 25px rgba(139,0,0,0.5);">
+            <h2 id="story-title" style="color: #ff3333; font-size: 32px; margin-bottom: 20px;">โรงเรียนมัธยมอาถรรพ์</h2>
+            <p id="story-text" style="color: #ccc; font-size: 18px; line-height: 1.8; margin-bottom: 30px; text-align: left;">
+                โรงเรียนแห่งนี้ถูกปิดตัวลงหลังเกิดเหตุการณ์สะเทือนขวัญ มีรายงานว่ายามกะดึกมักจะหายตัวไปอย่างไร้ร่องรอย... 
+                มีคำร่ำลือถึง 'ชายปริศนาในชุดสูทสีดำ' ที่มักจะเดินวนเวียนอยู่ตามโถงทางเดินและห้องต่างๆ ยามวิกาล 
+                หน้าที่ของคุณคือเฝ้าระวังผ่านกล้องวงจรปิด ห้ามให้สติหลุดเด็ดขาดจนกว่าจะครบกำหนดเวลาเปลี่ยนกะ!
+            </p>
+            <button class="horror-btn" onclick="startLoadingScreen()">เข้าสู่พื้นที่ปฏิบัติงาน</button>
+        </div>
+    </div>
+
+    <!-- 2.6 หน้าจอโหลดเกม 5 วินาที (Loading Screen) -->
+    <div id="loading-screen" class="screen">
+        <div class="title-container" style="text-align: center;">
+            <h2 style="color: #ff0000; font-size: 36px; font-family: monospace; margin-bottom: 20px;">INITIALIZING SYSTEM...</h2>
+            <div id="loading-timer" style="color: #ffcc00; font-size: 60px; font-family: monospace; font-weight: bold; text-shadow: 0 0 15px #ffcc00;">5</div>
+            <p style="color: #888; font-size: 16px; margin-top: 15px;">กำลังเชื่อมต่อสัญญาณกล้องวงจรปิด กรุณารอสักครู่...</p>
+        </div>
+    </div>
+
+    <!-- 3. หน้าตัวเกมหลัก (CCTV Game Screen) -->
+    <div id="game-screen" class="screen">
+        <div class="game-container">
+            
+            <!-- แถบแสดงสถานะเกม -->
+            <div class="game-top-bar">
+                <div id="game-timer" class="info-box">เริ่มใน: 30s</div>
+                <div class="sanity-container">
+                    <span>ค่าสติ (Sanity):</span>
+                    <div class="sanity-bar-bg">
+                        <div id="sanity-fill" class="sanity-fill"></div>
+                    </div>
+                    <span id="sanity-text">100%</span>
+                </div>
+                <div id="mistake-counter" class="info-box mistake-box">รายงานผิด: 0/5</div>
+            </div>
+
+            <!-- คำเตือนเมื่อสิ่งผิดปกติเกิน 3 จุด -->
+            <div id="warning-banner" class="warning-banner" style="display: none;">
+                ⚠️ คำเตือน: พบสิ่งผิดปกติจำนวนมาก! ค่าสติกำลังลดลงอย่างรวดเร็ว!
+            </div>
+
+            <!-- หน้าจอแสดงภาพ CCTV -->
+            <div class="screen-box">
+                <img id="cctv-screen" src="images/ทางเดิน.jpg" alt="CCTV Feed">
+                <div id="room-label" class="room-label">กล้อง 01: ทางเดิน</div>
+                <div class="rec-indicator"><span class="dot"></span> REC</div>
+                
+                <!-- หน้าจอดำสำหรับตรวจสอบ -->
+                <div id="checking-overlay" class="checking-overlay" style="display: none;">
+                    <div id="checking-text" class="checking-text">กำลังตรวจสอบ...</div>
+                </div>
+            </div>
+
+            <!-- แผงควบคุมเลือกห้องกล้องวงจรปิด -->
+            <div class="control-panel">
+                <h3>ควบคุมกล้อง (SELECT CAMERA)</h3>
+                <div class="cam-buttons">
+                    <button onclick="switchRoom(1)">CAM 01: ทางเดิน</button>
+                    <button onclick="switchRoom(2)">CAM 02: บันได</button>
+                    <button onclick="switchRoom(3)">CAM 03: โรงอาหาร</button>
+                    <button onclick="switchRoom(4)">CAM 04: ห้องคอม</button>
+                    <button onclick="switchRoom(5)">CAM 05: ห้องน้ำ</button>
+                    <button onclick="switchRoom(6)">CAM 06: ห้องประชุม</button>
+                </div>
+            </div>
+
+            <!-- ปุ่มแจ้งรายงานสิ่งผิดปกติ -->
+            <div class="report-panel">
+                <button class="btn-report" onclick="reportAnomaly()">REPORT ANOMALY (แจ้งสิ่งผิดปกติ)</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. หน้าจบเกม (Game Over / Victory Screen) -->
+    <div id="end-screen" class="screen">
+        <div class="title-container">
+            <h1 id="end-title" class="game-title" style="font-size: 70px;">GAME OVER</h1>
+            <p id="end-message" class="sub-title" style="font-size: 20px; color: #ff3333; margin-top: 15px;">คุณไม่สามารถรอดพ้นจากความผิดปกตินี้ได้...</p>
+        </div>
+        <button class="horror-btn" onclick="goToMainMenu()">กลับสู่หน้าหลัก</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
