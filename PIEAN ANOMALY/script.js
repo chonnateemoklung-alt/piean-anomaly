@@ -22,6 +22,7 @@ let sanityInterval = null;
 
 let gameStarted = false;
 let isChecking = false;
+let checkTimeouts = [];
 
 function showScreen(screenId) {
     document.querySelectorAll('.screen').forEach(screen => {
@@ -93,6 +94,10 @@ function stopAllIntervals() {
     clearInterval(gameInterval);
     clearInterval(anomalyInterval);
     clearInterval(sanityInterval);
+    checkTimeouts.forEach(clearTimeout);
+    checkTimeouts = [];
+    isChecking = false;
+    document.getElementById("checking-overlay").style.display = "none";
     gameStarted = false;
 }
 
@@ -243,9 +248,10 @@ function reportAnomaly() {
 
     overlay.style.display = "flex";
     textEl.innerText = "กำลังตรวจสอบ...";
+    const checkedRoomId = currentRoomId;
 
-    setTimeout(() => {
-        const room = roomsData[currentRoomId];
+    checkTimeouts.push(setTimeout(() => {
+        const room = roomsData[checkedRoomId];
 
         if (room.hasAnomaly) {
             room.hasAnomaly = false;
@@ -258,7 +264,7 @@ function reportAnomaly() {
 
         updateUIStats();
 
-        setTimeout(() => {
+        checkTimeouts.push(setTimeout(() => {
             overlay.style.display = "none";
             updateScreenDisplay();
             isChecking = false;
@@ -266,12 +272,13 @@ function reportAnomaly() {
             if (mistakes >= 5) {
                 endGame(false, "คุณรายงานผิดพลาดเกิน 5 ครั้ง - คุณหลอนจนสติแตก");
             }
-        }, 1500);
+        }, 1500));
 
-    }, 3000);
+    }, 3000));
 }
 
 function endGame(isWin, message) {
+    if (!gameStarted) return;
     stopAllIntervals();
     showScreen('end-screen');
 

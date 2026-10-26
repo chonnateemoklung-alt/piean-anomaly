@@ -2,7 +2,7 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>PIEAN ANOMALY</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -40,9 +40,9 @@
 
     <!-- 2.5 หน้าจอเนื้อเรื่องและข้อมูลสถานที่ (Story Screen) -->
     <div id="story-screen" class="screen">
-        <div class="story-container" style="max-width: 800px; text-align: center; padding: 30px; background: #0f0202; border: 2px solid #8b0000; box-shadow: 0 0 25px rgba(139,0,0,0.5);">
-            <h2 id="story-title" style="color: #ff3333; font-size: 32px; margin-bottom: 20px;">โรงเรียนมัธยมอาถรรพ์</h2>
-            <p id="story-text" style="color: #ccc; font-size: 18px; line-height: 1.8; margin-bottom: 30px; text-align: left;">
+        <div class="story-container">
+            <h2 id="story-title">โรงเรียนมัธยมอาถรรพ์</h2>
+            <p id="story-text">
                 โรงเรียนแห่งนี้ถูกปิดตัวลงหลังเกิดเหตุการณ์สะเทือนขวัญ มีรายงานว่ายามกะดึกมักจะหายตัวไปอย่างไร้ร่องรอย... 
                 มีคำร่ำลือถึง 'ชายปริศนาในชุดสูทสีดำ' ที่มักจะเดินวนเวียนอยู่ตามโถงทางเดินและห้องต่างๆ ยามวิกาล 
                 หน้าที่ของคุณคือเฝ้าระวังผ่านกล้องวงจรปิด ห้ามให้สติหลุดเด็ดขาดจนกว่าจะครบกำหนดเวลาเปลี่ยนกะ!
@@ -54,7 +54,7 @@
     <!-- 2.6 หน้าจอโหลดเกม 5 วินาที (Loading Screen) -->
     <div id="loading-screen" class="screen">
         <div class="title-container" style="text-align: center;">
-            <h2 style="color: #ff0000; font-size: 36px; font-family: monospace; margin-bottom: 20px;">INITIALIZING SYSTEM...</h2>
+            <h2 style="color: #ff0000; font-size: clamp(22px, 6vw, 36px); font-family: monospace; margin-bottom: 20px;">INITIALIZING SYSTEM...</h2>
             <div id="loading-timer" style="color: #ffcc00; font-size: 60px; font-family: monospace; font-weight: bold; text-shadow: 0 0 15px #ffcc00;">5</div>
             <p style="color: #888; font-size: 16px; margin-top: 15px;">กำลังเชื่อมต่อสัญญาณกล้องวงจรปิด กรุณารอสักครู่...</p>
         </div>
@@ -117,7 +117,7 @@
     <!-- 4. หน้าจบเกม (Game Over / Victory Screen) -->
     <div id="end-screen" class="screen">
         <div class="title-container">
-            <h1 id="end-title" class="game-title" style="font-size: 70px;">GAME OVER</h1>
+            <h1 id="end-title" class="game-title" style="font-size: clamp(36px, 11vw, 70px);">GAME OVER</h1>
             <p id="end-message" class="sub-title" style="font-size: 20px; color: #ff3333; margin-top: 15px;">คุณไม่สามารถรอดพ้นจากความผิดปกตินี้ได้...</p>
         </div>
         <button class="horror-btn" onclick="goToMainMenu()">กลับสู่หน้าหลัก</button>
